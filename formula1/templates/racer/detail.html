@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Driver detail{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'lightbox/css/lightbox.min.css' %}">
+{% endblock %}
+<!-- https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css -->
+{% block content %}
+<div class="row mb-3">
+    <div class="col-sm-12 bg-warning">
+        <h2 class="display-4 text-center">Driver details</h2>
+    </div>
+</div>
+<div class="row mt-5 mb-3">
+    <div class="col-lg-6 mb-3">
+        <h2 class="display-4 mb-3">{{ driver_detail.title }}</h2>
+        <div class="bg-secondary text-light p-2 mb-3">Driver birth: {{ driver_detail.birth }}, nationality: {{ driver_detail.nationality }}
+        </div>
+        <div class="row">
+            <div class="col-md-9">{{ driver_detail.biography }}</div>
+            <div class="col-md-3">
+                {% if driver_detail.poster %}
+                <a href="{{ driver_detail.poster.url }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src="{{ driver_detail.poster.url }}" class="img-fluid" alt="Picture of the driver">
+                </a>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 bg-light p-3">
+        <h3 class="border-bottom pb-3 text-secondary text-center text-uppercase">Gallery</h3>
+        <div class="row">
+        {% for image in driver_detail.attachment_set.all %}
+            <div class="col-lg-6 col-xl-4">
+                <a href="{{ image.file.url }}" data-lightbox="gallery">
+                    <img src="{{ image.file.url }}" class="img-fluid img-thumbnail" alt="{{ image.title }}">
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'lightbox/js/lightbox.min.js' %}"></script>
+
+<!-- https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js" integrity="sha512-Y2IiVZeaBwXG1wSV7f13plqlmFOx8MdjuHyYFVoYzhyRr3nH/NMDjTBSswijzADdNzMyWNetbLMfOpIPl6Cv9g==" crossorigin="anonymous" referrerpolicy="no-referrer -->
+<script>
+    </script>
+{% endblock %}

@@ -1,0 +1,17 @@
+<div>
+    {% for driver in drivers %}
+    <div class="row mt-3 mb-3 pb-2">
+        <div class="col-md-2">
+            {% if driver.poster %}
+            <a href="{% url 'driver_detail' driver.id %}"><img class="img-fluid" src="{{ driver.poster.url }}" alt="{{ driver.name }}"></a>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h4><a href="{% url 'driver_detail' driver.id %}">{{ driver.name }}</a></h4>
+            <p>{{ driver.biography|truncatewords:30 }}</p>
+            <p class="border-top pt-2">birth: <b>{{ driver.birth }}</b></p>
+            <p>Team: {% for constructor in driver.constructors.all %}<a href="{% url 'driver-constructor' constructor.name %}" class="btn btn-light">{{ constructor.name }}</a> {% endfor %}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
