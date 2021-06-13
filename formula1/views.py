@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+
+from formula1.forms import DriverModelForm
 from formula1.models import *
 
 
@@ -82,3 +85,20 @@ class DriverDetail(DetailView):
             context['view_title'] = 'Circuits'
             context['view_head'] = 'Circuits overview'
         return context """
+
+
+class DriverCreateView(CreateView):
+    model = Driver
+    fields = ['name', 'poster', 'nationality', 'birth', 'teams', 'driver_wins', 'wdc', 'biography']
+
+
+class DriverUpdateView(UpdateView):
+    model = Driver
+    #fields = '__all__'
+    form_class = DriverModelForm
+    template_name = 'formula1/driver_form_bootstrap.html'
+
+
+class DriverDeleteView(DeleteView):
+    model = Driver
+    success_url = reverse_lazy('driver_list')

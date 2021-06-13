@@ -28,6 +28,9 @@ class Constructor(models.Model):
     def __str__(self):
         return self.name
 
+    def driver_count(self, obj):
+        return obj.driver_set.count()
+
 
 class Driver(models.Model):
     name = models.CharField(max_length= 50, unique=True, verbose_name="Driver name",
@@ -38,7 +41,7 @@ class Driver(models.Model):
                              verbose_name="Birth")
     teams = models.ForeignKey(Constructor,
                               help_text="Select the constructor team the driver has been racing for",
-                              on_delete=models.CASCADE)
+                              on_delete=models.CASCADE, verbose_name="Team")
     driver_wins = models.IntegerField(default=0, blank=True, null=True, verbose_name="Number of victories")
     wdc = models.IntegerField(default=0, blank=True, null=True, verbose_name="Number of championships")
     biography = models.TextField(blank=True, null=True, verbose_name="Biography")
@@ -51,6 +54,9 @@ class Driver(models.Model):
 
     def get_absolute_url(self):
         return reverse("driver-detail", args=[str(self.id)])
+
+    def birth_year(self):
+        return self.birth
 
 
 """class Circuit(models.Model):
@@ -94,9 +100,25 @@ class Attachment(models.Model):
     """circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)"""
 
     class Meta:
-        ordering = ["-last_update"]
+        #ordering = ["-last_update"]
+        order_with_respect_to = 'driver'
 
     def __str__(self):
         return f"{self.title}"
+
+    @property
+    def filesize(self):
+        x = self.file.size
+        y = 512000
+        if x < y * 1000:
+            value = round(x / 1024, 2)
+            ext = ' KB'
+        elif x < y * 1000 ** 2:
+            value = round(x / 1024 ** 2, 2)
+            ext = ' MB'
+        else:
+            value = round(x / 1024 ** 3, 2)
+            ext = ' GB'
+        return str(value) + ext
 
 
