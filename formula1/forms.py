@@ -19,4 +19,4 @@ class DriverModelForm(ModelForm):
     class Meta:
         model = Driver
         fields = ['name', 'poster', 'nationality', 'birth', 'teams', 'driver_wins', 'wdc', 'biography']
-        labels = {'poster': 'Driver photo'}
+        labels = {'poster': 'Photo'}

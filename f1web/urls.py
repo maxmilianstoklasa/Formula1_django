@@ -18,6 +18,8 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
                   # URL "movies/" je namapováno na aplikaci movies a její vlastní soubor 'movies.urls'
                   path('formula1/', include('formula1.urls')),
+                  path('accounts/', include('accounts.urls')),
+                  path('accounts/', include('django.contrib.auth.urls')),
                   # domovská stránka webu ('') je automaticky přesměrována na url z předešlého řádku ('movies')
                   path('', RedirectView.as_view(url='formula1/')),
               ]
