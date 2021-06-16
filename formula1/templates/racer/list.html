@@ -2,38 +2,37 @@
 {% load bootstrap_pagination %}
 {% block title %}{{ view_title }}{% endblock %}
 {% block content %}
-<div class="row mt-3 mb-3 bg-warning p-3"> 
-    <div class="col-sm-12"> 
+<div class="row mt-3 mb-3 bg-danger text-light p-3">
+    <div class="col-sm-12">
         <h2 class="text-center">{{ view_head }}</h2>
-    </div> 
-</div> 
-<div class="row"> 
+    </div>
+</div>
+<div class="row">
     {% for driver in driver_list %}
     <div class="col-sm-4">
-        <div class="card"> 
+        <div class="card">
             {% if driver.poster %}
             <img class="card-img-top" src="{{ driver.poster.url }}" alt="{{ driver.name }}">
-            {% endif %} 
-            <div class="card-body"> 
+            {% endif %}
+            <div class="card-body">
                 <h4 class="card-title">{{ driver.name }}</h4>
                 <p class="card-text"><strong>Team:</strong>
-
-              {{ driver.teams.name }}
-
-                </p> 
-                <p><strong>:</strong> {{ constructor.wcc }}</p>
-                <a href="{% url 'driver-detail' driver.pk %}" class="btn btn-primary">Details</a>
-            </div> 
-        </div> 
-    </div> 
-    {% endfor %} 
-</div> 
-<div class="row"> 
-    <div class="col-sm-12"> 
-        {% bootstrap_paginate page_obj range=10 %}
-    </div> 
+                    {{ driver.teams.name }}
+                </p>
+                <a href="{% url 'driver-detail' driver.pk %}" class="btn btn-secondary">Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
+<div class="row">
+    <div class="col-sm-12">
+        {% bootstrap_paginate page_obj range=5 %}
+    </div>
+</div>
+{% if perms.formula1.add_driver %}
 <div>
     <a href="{% url 'driver_create' %}" class="btn btn-success">Add driver</a>
 </div>
+{% endif %}
 {% endblock %} 

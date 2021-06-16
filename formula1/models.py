@@ -44,6 +44,7 @@ class Driver(models.Model):
                               on_delete=models.CASCADE, verbose_name="Team")
     driver_wins = models.IntegerField(default=0, blank=True, null=True, verbose_name="Number of victories")
     wdc = models.IntegerField(default=0, blank=True, null=True, verbose_name="Number of championships")
+    points = models.IntegerField(default=0, blank=True, null=True, verbose_name="Points in 2021")
     biography = models.TextField(blank=True, null=True, verbose_name="Biography")
 
     class Meta:

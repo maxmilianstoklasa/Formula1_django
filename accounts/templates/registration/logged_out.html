@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row mb-3">
-    <div class="col-sm-12 bg-warning">
-        <h2 class="display-4 text-center">User logout</h2>
+<div class="row mt-4 mb-3 bg-danger text-light p-3">
+    <div class="col-sm-12">
+        <h1 class="text-center">Log out</h1>
     </div>
 </div>
 <div class="row mb-3">
     <div class="container">
         <div class="alert alert-info">
             <p>You've been succesfully logged out</p>
-            <a href="{% url 'login'%}">Click to login</a>
+            <a href="{% url 'login'%}">Click to log in</a>
         </div>
     </div>
 </div>

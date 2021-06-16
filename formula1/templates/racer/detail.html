@@ -7,29 +7,48 @@
 <!-- https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css -->
 {% block content %}
 <div class="row mb-3">
-    <div class="col-sm-12 bg-warning">
-        <h2 class="display-4 text-center">Driver details</h2>
-    </div>
+
 </div>
-<div class="row mt-5 mb-3">
+<div class="row mt-4 mb-3">
     <div class="col-lg-6 mb-3">
-        <h2 class="display-4 mb-3">{{ driver_detail.title }}</h2>
-        <div class="bg-secondary text-light p-2 mb-3">Driver birth: {{ driver_detail.birth }}, nationality: {{ driver_detail.nationality }}
+        <h2 class="text-uppercase mb-3">{{ driver_detail.title }}</h2>
+        <div class="bg-danger text-light p-2 mb-3 "> <h3 class="text-center" >{{ driver_detail.name }}</h3>
         </div>
         <div class="row">
-            <div class="col-md-9">{{ driver_detail.biography }}</div>
-            <div class="col-md-3">
+            <div class="col-md-8 text-block">{{ driver_detail.biography }}</div>
+            <div class="col-md-4">
                 {% if driver_detail.poster %}
                 <a href="{{ driver_detail.poster.url }}" data-toggle="lightbox" data-gallery="gallery">
-                    <img src="{{ driver_detail.poster.url }}" class="img-fluid" alt="Picture of the driver">
+                    <img src="{{ driver_detail.poster.url }}" class="img-fluid pb-3" alt="Picture of the driver">
                 </a>
-
                 {% endif %}
+                <ul class="bg-danger text-light p-4 my-lg-2 pt-lg-2 pb-lg-2">
+                    <li>
+                        <strong>Team:</strong> {{ driver_detail.teams }}
+                    </li>
+                    <li>
+                        <strong>Birth:</strong> {{ driver_detail.birth }}
+                    </li>
+                    <li>
+                        <strong>Nationality:</strong> {{ driver_detail.nationality }}
+                    </li>
+                    <li>
+                        <strong>Championships:</strong> {{ driver_detail.wdc }}
+                    </li>
+                    <li>
+                        <strong>Victories:</strong> {{ driver_detail.driver_wins }}
+                    </li>
+                    <li>
+                        <strong>Points in 2021:</strong> {{ driver_detail.points }} pts
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
     <div class="col-lg-6 bg-light p-3">
-        <h3 class="border-bottom pb-3 text-secondary text-center text-uppercase">Gallery</h3>
+        <div class="bg-danger text-light p-2 mb-3">
+        <h3 class="text-center text-uppercase">Gallery</h3>
+        </div>
         <div class="row">
         {% for image in driver_detail.attachment_set.all %}
             <div class="col-lg-6 col-xl-4">
@@ -49,7 +68,11 @@
 <script>
     </script>
 <div>
-        <a href="{% url 'driver_update' driver_detail.pk %}" class="btn btn-warning">Edit driver</a>
-        <a href="{% url 'driver_delete' driver_detail.pk %}" class="btn btn-danger">Delete driver</a>
+    {% if perms.formula1.change_driver %}
+        <a href="{% url 'driver_update' driver_detail.pk %}" class="btn btn-primary mb-3 ml-3">Edit driver</a>
+    {% endif %}
+    {% if perms.formula1.delete_driver %}
+        <a href="{% url 'driver_delete' driver_detail.pk %}" class="btn btn-danger mb-3 ml-3">Delete driver</a>
+    {% endif %}
 </div>
 {% endblock %}
